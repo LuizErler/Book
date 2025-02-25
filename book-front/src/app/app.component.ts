@@ -7,7 +7,7 @@ import { RouterOutlet } from '@angular/router';
   standalone: true, // Indica que o AppComponent é standalone
   imports: [MenuCadastrosComponent, RouterOutlet], // Certifique-se de incluir o MenuCadastros aqui
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'book-front';
