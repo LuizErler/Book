@@ -1,9 +1,9 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { importProvidersFrom } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from './app-routing';
 
-import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-
-export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(withEventReplay())]
+export const appConfig = {
+  providers: [
+    importProvidersFrom(RouterModule.forRoot(appRoutes))
+  ]
 };

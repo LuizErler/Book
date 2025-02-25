@@ -1,0 +1,51 @@
+/* Remover os pontos (bullet points) */
+.navbar-nav {
+  list-style: none; /* Remove os pontos dos itens de lista */
+  padding-left: 0; /* Remove o preenchimento à esquerda */
+}
+
+/* Ajuste da cor e do fundo */
+.navbar {
+  margin-bottom: 30px; /* Espaço entre o menu e o conteúdo abaixo */
+  background-color: #f8f9fa !important; /* Cor de fundo mais clara */
+}
+
+.navbar-brand {
+  font-size: 1.8rem; /* Aumenta o tamanho da palavra "Cadastros" */
+  margin-right: 20px; /* Espaço à direita do título */
+  color: green; /* Cor do texto "Cadastros" em branco */
+}
+
+.nav-item {
+  margin-left: 20px; /* Espaço entre os itens do menu */
+}
+
+.nav-link {
+  font-size: 1.1rem; /* Aumenta o tamanho da fonte dos links */
+  padding: 10px 15px; /* Aumenta o espaço dentro dos links */
+  border-radius: 4px; /* Cantos arredondados nos links */
+  color: #333; /* Cor do texto dos links */
+  transition: background-color 0.3s ease; /* Transição suave na troca de cor de fundo */
+}
+
+.nav-link:hover {
+  background-color: #e0e0e0; /* Cor de fundo mais clara ao passar o mouse */
+  color: #fff; /* Cor do texto em branco no hover */
+}
+
+.navbar-light {
+  background-color: #e3f2fd !important; /* Cor de fundo mais clara e agradável */
+}
+
+.navbar {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombramento suave */
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: flex-end; /* Alinha os itens à direita */
+}
+
+.nav-item .nav-link {
+  font-weight: 600; /* Deixa o texto mais ousado */
+}

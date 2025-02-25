@@ -13,14 +13,23 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<BaseDb>();
+
 builder.Services.AddScoped<ILivroRepository, LivroRepository>();
+builder.Services.AddScoped<IAutorRepository, AutorRepository>();
+builder.Services.AddScoped<IAssuntoRepository, AssuntoRepository>();
+
 builder.Services.AddScoped<ILivroService, LivroService>();
+builder.Services.AddScoped<IAutorService, AutorService>();
+builder.Services.AddScoped<IAssuntoService, AssuntoService>();
+
+
 builder.Services.AddScoped<ILivroAppService, LivroAppService>();
+builder.Services.AddScoped<IAutorAppService, AutorAppService>();
+builder.Services.AddScoped<IAssuntoAppService, AssuntoAppService>();
+
+
+
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
-
-
-
 
 var app = builder.Build();
 

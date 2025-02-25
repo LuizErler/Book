@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+
+.menu-cadastros ul {
+    list-style-type: none; /* Remove o marcador padrão da lista */
+    padding: 0;
+  }
+  
+  .menu-cadastros ul li {
+    margin-bottom: 10px; /* Ajuste o espaçamento entre os itens */
+  }
+  
+  .menu-cadastros ul li a {
+    text-decoration: none; /* Remove o sublinhado do link */
+    color: #007BFF; /* Altere a cor conforme necessário */
+  }
+  
+  .menu-cadastros ul li a:hover {
+    text-decoration: underline; /* Adiciona sublinhado quando passar o mouse */
+  }
+  
