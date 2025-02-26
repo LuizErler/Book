@@ -1,1 +1,29 @@
-<p>autor works!</p>
+<!-- src/app/autor/autor.component.html -->
+<div class="container mt-5">
+    <!-- Título do formulário -->
+    <h2 class="text-center mb-4">Cadastro de Autor</h2>
+  
+    <!-- Formulário de Cadastro -->
+    <form #autorForm="ngForm" (ngSubmit)="onSubmit(autorForm)" class="mx-auto" style="max-width: 500px;">
+      <div class="form-group">
+        <label for="nome">Nome do Autor:</label>
+        <input 
+          type="text" 
+          id="nome" 
+          name="nome" 
+          class="form-control" 
+          [(ngModel)]="autor.nome" 
+          required
+          placeholder="Digite o nome do autor"
+        >
+      </div>
+  
+      <button 
+        type="submit" 
+        class="btn btn-primary btn-block mt-3" 
+        [disabled]="!autorForm.valid">
+        Cadastrar
+      </button>
+    </form>
+  </div>
+  

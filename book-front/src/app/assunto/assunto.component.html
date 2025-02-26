@@ -1,1 +1,29 @@
-<p>assunto works!</p>
+<!-- src/app/assunto/assunto.component.html -->
+<div class="container mt-5">
+    <!-- Título do formulário -->
+    <h2 class="text-center mb-4">Cadastro de Assunto</h2>
+  
+    <!-- Formulário de Cadastro -->
+    <form #assuntoForm="ngForm" (ngSubmit)="onSubmit(assuntoForm)" class="mx-auto" style="max-width: 500px;">
+      <div class="form-group">
+        <label for="descricao">Descrição do Assunto:</label>
+        <input 
+          type="text" 
+          id="descricao" 
+          name="descricao" 
+          class="form-control" 
+          [(ngModel)]="assunto.descricao" 
+          required
+          placeholder="Digite a descrição do assunto"
+        >
+      </div>
+  
+      <button 
+        type="submit" 
+        class="btn btn-primary btn-block mt-3" 
+        [disabled]="!assuntoForm.valid">
+        Cadastrar
+      </button>
+    </form>
+  </div>
+  

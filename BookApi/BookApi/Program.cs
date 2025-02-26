@@ -6,42 +6,51 @@ using DesafioBackEndInfra;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Adicionar serviços ao container
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<BaseDb>();
 
+// Adicionar repositórios e serviços
 builder.Services.AddScoped<ILivroRepository, LivroRepository>();
 builder.Services.AddScoped<IAutorRepository, AutorRepository>();
 builder.Services.AddScoped<IAssuntoRepository, AssuntoRepository>();
-
 builder.Services.AddScoped<ILivroService, LivroService>();
 builder.Services.AddScoped<IAutorService, AutorService>();
 builder.Services.AddScoped<IAssuntoService, AssuntoService>();
-
-
 builder.Services.AddScoped<ILivroAppService, LivroAppService>();
 builder.Services.AddScoped<IAutorAppService, AutorAppService>();
 builder.Services.AddScoped<IAssuntoAppService, AssuntoAppService>();
 
-
+// Configurar CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost",
+        policy =>
+        {
+            policy.AllowAnyOrigin()  // Permite todas as origens (se necessário para testar)
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configurar pipeline de requisições HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
 }
 
-app.UseHttpsRedirection();
+// Usar CORS antes de outros middlewares
+app.UseCors("AllowLocalhost");
+
+// Se necessário, descomente a linha abaixo durante o desenvolvimento
+// app.UseHttpsRedirection();  // Pode ser comentado durante o desenvolvimento, se não for usar SSL
 
 app.UseAuthorization();
 

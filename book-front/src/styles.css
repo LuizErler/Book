@@ -17,3 +17,5 @@
     text-decoration: underline; /* Adiciona sublinhado quando passar o mouse */
   }
   
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -19,7 +19,7 @@ namespace DesafioBackEndInfra
         {
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
             var conn = new NpgsqlConnection(connectionString);
-            conn.Open(); // Abre a conexão automaticamente
+            conn.Open(); 
             return conn;
         }
 

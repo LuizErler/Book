@@ -18,8 +18,8 @@ namespace BookInfra.Repositories
         {
             using var connection = _baseDb.GetConnection();
             string sql = @"
-                INSERT INTO Livro (Titulo, Editora, Edicao, AnoPublicacao) 
-                VALUES (@Titulo, @Editora, @Edicao, @AnoPublicacao) 
+                INSERT INTO Livro (Titulo, Editora, Edicao, AnoPublicacao, Valor) 
+                VALUES (@Titulo, @Editora, @Edicao, @AnoPublicacao, @Valor) 
                 RETURNING Codl;";
 
             return await connection.ExecuteScalarAsync<int>(sql, livro);
@@ -30,7 +30,7 @@ namespace BookInfra.Repositories
             using var connection = _baseDb.GetConnection();
             string sql = @"
                 UPDATE Livro 
-                SET Titulo = @Titulo, Editora = @Editora, Edicao = @Edicao, AnoPublicacao = @AnoPublicacao 
+                SET Titulo = @Titulo, Editora = @Editora, Edicao = @Edicao, AnoPublicacao = @AnoPublicacao , Valor = @Valor
                 WHERE Codl = @Codl;";
 
             int rowsAffected = await connection.ExecuteAsync(sql, livro);
@@ -40,7 +40,7 @@ namespace BookInfra.Repositories
         public async Task<bool> DeletarAsync(int id)
         {
             using var connection = _baseDb.GetConnection();
-            string sql = "DELETE FROM Livro WHERE Codl = @Id;";
+            string sql = "DELETE FROM public.livro WHERE Codl = @Id;";
 
             int rowsAffected = await connection.ExecuteAsync(sql, new { Id = id });
             return rowsAffected > 0;
