@@ -1,10 +1,9 @@
 ﻿using BookDomain.Entities;
-using BookDomain.Repositories;  // Alterado para importar a interface do Domain
+using BookDomain.Repositories;
 using DesafioBackEndInfra;
-using Npgsql;
+using Dapper;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Dapper;
 
 namespace BookInfra.Repositories
 {
@@ -19,49 +18,61 @@ namespace BookInfra.Repositories
 
         public async Task<int> AdicionarAsync(Autor autor)
         {
-            using (var connection = _baseDb.GetConnection())
-            {
-                var query = "INSERT INTO Autor (Nome) VALUES (@Nome) RETURNING CodAu";
-                return await connection.ExecuteScalarAsync<int>(query, new { autor.Nome });
-            }
+            var query = "INSERT INTO public.autor (Nome) VALUES (@Nome) RETURNING CodAu";
+            using var connection = _baseDb.GetConnection();
+            return await connection.ExecuteScalarAsync<int>(query, new { autor.Nome });
         }
 
         public async Task<bool> AtualizarAsync(Autor autor)
         {
-            using (var connection = _baseDb.GetConnection())
-            {
-                var query = "UPDATE Autor SET Nome = @Nome WHERE CodAu = @CodAu";
-                var result = await connection.ExecuteAsync(query, new { autor.Nome, autor.CodAu });
-                return result > 0;
-            }
+            var query = "UPDATE public.autor SET Nome = @Nome WHERE CodAu = @CodAu";
+            using var connection = _baseDb.GetConnection();
+            var result = await connection.ExecuteAsync(query, new { autor.Nome, autor.CodAu });
+            return result > 0;
         }
 
         public async Task<bool> DeletarAsync(int id)
         {
-            using (var connection = _baseDb.GetConnection())
-            {
-                var query = "DELETE FROM Autor WHERE CodAu = @CodAu";
-                var result = await connection.ExecuteAsync(query, new { CodAu = id });
-                return result > 0;
-            }
+            var query = "DELETE FROM public.autor WHERE CodAu = @CodAu";
+            using var connection = _baseDb.GetConnection();
+            var result = await connection.ExecuteAsync(query, new { CodAu = id });
+            return result > 0;
         }
 
         public async Task<Autor> ObterPorIdAsync(int id)
         {
-            using (var connection = _baseDb.GetConnection())
-            {
-                var query = "SELECT * FROM Autor WHERE CodAu = @CodAu";
-                return await connection.QueryFirstOrDefaultAsync<Autor>(query, new { CodAu = id });
-            }
+            var query = "SELECT CodAu, Nome FROM public.autor WHERE CodAu = @CodAu";
+            using var connection = _baseDb.GetConnection();
+            return await connection.QueryFirstOrDefaultAsync<Autor>(query, new { CodAu = id });
         }
 
         public async Task<IEnumerable<Autor>> ObterTodosAsync()
         {
-            using (var connection = _baseDb.GetConnection())
-            {
-                var query = "SELECT * FROM Autor";
-                return await connection.QueryAsync<Autor>(query);
-            }
+            var query = "SELECT CodAu, Nome FROM public.autor";
+            using var connection = _baseDb.GetConnection();
+            return await connection.QueryAsync<Autor>(query);
+        }
+
+        public async Task<IEnumerable<LivroAutor>> ObterLivroAutorPorIdAsync(int id)
+        {
+            var query = "SELECT livro_codl AS CodLivro, autor_codau AS CodAutor FROM public.livro_autor WHERE livro_codl = @CodLivro";
+            using var connection = _baseDb.GetConnection();
+            return await connection.QueryAsync<LivroAutor>(query, new { CodLivro = id });
+        }
+
+        public async Task<bool> DeletarLivroAutorAsync(int id)
+        {
+            var query = "DELETE FROM public.livro_autor WHERE livro_codl = @CodLivro";
+            using var connection = _baseDb.GetConnection();
+            var result = await connection.ExecuteAsync(query, new { CodLivro = id });
+            return result > 0;
+        }
+
+        public async Task AdicionarLivroAutorAsync(int codLivro, int codAutor)
+        {
+            var query = "INSERT INTO public.livro_autor (livro_codl, autor_codau) VALUES (@CodLivro, @CodAutor)";
+            using var connection = _baseDb.GetConnection();
+            await connection.ExecuteAsync(query, new { CodLivro = codLivro, CodAutor = codAutor });
         }
     }
 }

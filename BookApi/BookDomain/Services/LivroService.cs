@@ -6,10 +6,15 @@ namespace BookDomain.Services
     public class LivroService : ILivroService
     {
         private readonly ILivroRepository _livroRepository;
+        private readonly IAssuntoRepository _assuntoRepository;
+        private readonly IAutorRepository _autorRepository;
 
-        public LivroService(ILivroRepository livroRepository)
+        public LivroService(ILivroRepository livroRepository ,IAssuntoRepository assuntoRepository, IAutorRepository autorRepository)
         {
             _livroRepository = livroRepository;
+            _assuntoRepository = assuntoRepository;
+            _autorRepository = autorRepository;
+
         }
 
         public async Task<int> AdicionarAsync(Livro livro)
@@ -20,7 +25,12 @@ namespace BookDomain.Services
             if (livro.Edicao < 1)
                 throw new ArgumentException("A edição do livro deve ser maior que 0.");
 
-            return await _livroRepository.AdicionarAsync(livro);
+            var codLivro = await _livroRepository.AdicionarAsync(livro);
+
+            await _autorRepository.AdicionarLivroAutorAsync(codLivro, livro.AutorId??0);
+            await _assuntoRepository.AdicionarLivroAssuntoAsync(codLivro, livro.AssuntoId ?? 0);
+
+            return codLivro;
         }
 
         public async Task<bool> AtualizarAsync(Livro livro)
@@ -37,8 +47,39 @@ namespace BookDomain.Services
             var livroExistente = await _livroRepository.ObterPorIdAsync(id);
             if (livroExistente == null)
                 throw new KeyNotFoundException("Livro não encontrado.");
+            try
+            {
+                var livroAutorExistente = await _autorRepository.ObterLivroAutorPorIdAsync(id);
+                await DeletarLivroAutor(livroAutorExistente);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao deletar livro", ex);
+            }
+            
+            var livroAssuntoExistente = await _assuntoRepository.ObterLivroAssuntoPorIdAsync(id);
+
+            
+
+            await DeletarLivroAssunto(livroAssuntoExistente);
 
             return await _livroRepository.DeletarAsync(id);
+        }
+
+        private async Task DeletarLivroAssunto(IEnumerable<LivroAssunto> livroAssuntoExistente)
+        {
+            foreach (var item in livroAssuntoExistente)
+            {
+                var result = await _assuntoRepository.DeletarLivroAssuntoAsync(item.CodLivro);
+            }
+        }
+
+        private async Task DeletarLivroAutor(IEnumerable<LivroAutor> livroAutorExistente)
+        {
+            foreach (var item in livroAutorExistente)
+            {
+               var result = await _autorRepository.DeletarLivroAutorAsync(item.CodLivro);
+            }
         }
 
         public async Task<Livro?> ObterPorIdAsync(int id)
