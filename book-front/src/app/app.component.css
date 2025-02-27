@@ -1,6 +1,5 @@
-/* Adiciona uma margem no topo do conteúdo para que ele não fique por trás do menu fixo */
 .conteudo {
-    margin-top: 80px; /* Ajuste conforme a altura do seu menu */
-    padding: 20px; /* Espaçamento do conteúdo */
+    margin-top: 80px; 
+    padding: 20px; 
   }
   

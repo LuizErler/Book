@@ -9,7 +9,7 @@ namespace BookDomain.Services
         private readonly IAssuntoRepository _assuntoRepository;
         private readonly IAutorRepository _autorRepository;
 
-        public LivroService(ILivroRepository livroRepository ,IAssuntoRepository assuntoRepository, IAutorRepository autorRepository)
+        public LivroService(ILivroRepository livroRepository, IAssuntoRepository assuntoRepository, IAutorRepository autorRepository)
         {
             _livroRepository = livroRepository;
             _assuntoRepository = assuntoRepository;
@@ -27,8 +27,15 @@ namespace BookDomain.Services
 
             var codLivro = await _livroRepository.AdicionarAsync(livro);
 
-            await _autorRepository.AdicionarLivroAutorAsync(codLivro, livro.AutorId??0);
-            await _assuntoRepository.AdicionarLivroAssuntoAsync(codLivro, livro.AssuntoId ?? 0);
+            foreach (var item in livro.AssuntoIds)
+            {
+                await _assuntoRepository.AdicionarLivroAssuntoAsync(codLivro, item ?? 0);
+            }
+            foreach (var item in livro.AutorIds)
+            {
+                await _autorRepository.AdicionarLivroAutorAsync(codLivro, item ?? 0);
+            }
+
 
             return codLivro;
         }
@@ -47,20 +54,11 @@ namespace BookDomain.Services
             var livroExistente = await _livroRepository.ObterPorIdAsync(id);
             if (livroExistente == null)
                 throw new KeyNotFoundException("Livro não encontrado.");
-            try
-            {
-                var livroAutorExistente = await _autorRepository.ObterLivroAutorPorIdAsync(id);
-                await DeletarLivroAutor(livroAutorExistente);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erro ao deletar livro", ex);
-            }
-            
+
+            var livroAutorExistente = await _autorRepository.ObterLivroAutorPorIdAsync(id);
             var livroAssuntoExistente = await _assuntoRepository.ObterLivroAssuntoPorIdAsync(id);
 
-            
-
+            await DeletarLivroAutor(livroAutorExistente);
             await DeletarLivroAssunto(livroAssuntoExistente);
 
             return await _livroRepository.DeletarAsync(id);
@@ -78,7 +76,7 @@ namespace BookDomain.Services
         {
             foreach (var item in livroAutorExistente)
             {
-               var result = await _autorRepository.DeletarLivroAutorAsync(item.CodLivro);
+                var result = await _autorRepository.DeletarLivroAutorAsync(item.CodLivro);
             }
         }
 

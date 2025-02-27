@@ -14,19 +14,16 @@ namespace BookApp.Services
 
         public async Task<int> AdicionarAutorAsync(Autor autor)
         {
-            // Aqui você pode adicionar lógicas adicionais, como validações
             return await _autorService.AdicionarAutorAsync(autor);
         }
 
         public async Task<bool> AtualizarAutorAsync(Autor autor)
         {
-            // Adicione lógica de validação ou outra camada de lógica de negócios
             return await _autorService.AtualizarAutorAsync(autor);
         }
 
         public async Task<bool> DeletarAutorAsync(int id)
         {
-            // Possível lógica de validação
             return await _autorService.DeletarAutorAsync(id);
         }
 

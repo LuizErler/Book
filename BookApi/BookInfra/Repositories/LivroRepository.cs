@@ -57,9 +57,29 @@ namespace BookInfra.Repositories
         public async Task<IEnumerable<Livro>> ObterTodosAsync()
         {
             using var connection = _baseDb.GetConnection();
-            string sql = "SELECT * FROM Livro;";
-
+            string sql = @"
+        SELECT 
+            codl, 
+            titulo, 
+            editora, 
+            edicao, 
+            anopublicacao, 
+            valor,
+            STRING_AGG(DISTINCT a.assunto_codas::text, ',') AS IdsAssuntos,
+            STRING_AGG(DISTINCT au.autor_codau::text, ',') AS IdsAutores
+        FROM 
+            public.livro l
+        LEFT JOIN 
+            public.livro_assunto a ON a.livro_codl = l.codl
+        LEFT JOIN 
+            public.livro_autor au ON au.livro_codl = l.codl
+        GROUP BY 
+            l.codl
+        ORDER BY 
+            codl;
+    ";
             return await connection.QueryAsync<Livro>(sql);
         }
+
     }
 }

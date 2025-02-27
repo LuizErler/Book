@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="FastMember" Version="1.5.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
     <PackageReference Include="Npgsql" Version="9.0.3" />
+    <PackageReference Include="Stimulsoft.Reports.Engine.NetCore" Version="2025.1.5" />
   </ItemGroup>
 
   <ItemGroup>

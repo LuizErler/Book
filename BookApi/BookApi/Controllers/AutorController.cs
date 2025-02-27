@@ -15,7 +15,6 @@ namespace BookApi.Controllers
             _autorAppService = autorAppService;
         }
 
-        // GET: api/autor
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Autor>>> GetTodosAutores()
         {
@@ -23,7 +22,6 @@ namespace BookApi.Controllers
             return Ok(autores);
         }
 
-        // GET: api/autor/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Autor>> GetAutorPorId(int id)
         {
@@ -35,7 +33,6 @@ namespace BookApi.Controllers
             return Ok(autor);
         }
 
-        // POST: api/autor
         [HttpPost]
         public async Task<ActionResult<Autor>> PostAutor(Autor autor)
         {
@@ -43,7 +40,6 @@ namespace BookApi.Controllers
             return CreatedAtAction(nameof(GetAutorPorId), new { id = id }, autor);
         }
 
-        // PUT: api/autor/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAutor(int id, Autor autor)
         {
@@ -61,7 +57,6 @@ namespace BookApi.Controllers
             return NoContent();
         }
 
-        // DELETE: api/autor/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAutor(int id)
         {

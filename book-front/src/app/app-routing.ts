@@ -7,5 +7,5 @@ export const appRoutes: Routes = [
   { path: 'livro', component: LivroComponent },
   { path: 'autor', component: AutorComponent },
   { path: 'assunto', component: AssuntoComponent },
-  { path: '', redirectTo: '/livro', pathMatch: 'full' } // Redireciona para /livro por padrão
+  { path: '', redirectTo: '/livro', pathMatch: 'full' } 
 ];

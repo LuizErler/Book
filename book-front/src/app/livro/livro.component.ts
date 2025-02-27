@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-livro',
-  standalone: true, // ✅ Confirma que é standalone
+  standalone: true, 
   imports: [CommonModule,LivroTabelaComponent,FormsModule],
    providers: [LivroService,AutorService,AssuntoService,LivroTabelaComponent],
   templateUrl: './livro.component.html',
@@ -19,9 +19,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class LivroComponent {
 
-  livro: Livro = { codl: 0, titulo: '', valor: 0, autorId: 0, assuntoId: 0 };
+  livro: Livro = { codl: 0, titulo: '', valor: 0, autorIds: [], anoPublicacao:'', assuntoIds: [] };
   autores: Autor[] = [];
   assuntos: Assunto[] = [];
+  anoAtual = new Date().getFullYear();
+  showForm: boolean = true;
 
   @ViewChild(LivroTabelaComponent) livroTabelaComponent!: LivroTabelaComponent;
 
@@ -40,14 +42,47 @@ export class LivroComponent {
     });
   }
 
+  validarAnoPublicacao(ano: any): void {
+    const anoNum = parseInt(ano, 10); 
+  
+    if (isNaN(anoNum) || anoNum < 1) {
+      this.livro.anoPublicacao = '1';
+    } else if (anoNum > this.anoAtual) {
+      this.livro.anoPublicacao = this.anoAtual.toString();
+    } else if (ano.length > 4) {
+      this.livro.anoPublicacao = ano.slice(0, 4);
+    }
+  
+    this.livro.anoPublicacao = this.livro.anoPublicacao.padStart(4, '0');
+  }
+
+  somenteNumeros(event: any): void {
+    let valor = event.target.value;
+
+  if (valor.startsWith('0') && valor.length > 1) {
+    valor = valor.substring(1);
+  }
+
+  event.target.value = valor.replace(/[^0-9.]/g, '');  
+  this.livro.valor = valor; 
+}
+toggleForm(): void {
+  this.showForm = !this.showForm;
+}
+
+  
   onSubmit(form: any): void {
     if (form.valid) {
       this.livroService.addLivro(this.livro).subscribe(() => {
-        console.log('Livro cadastrado com sucesso!');
-        this.livroTabelaComponent.refresh(); // Emitir evento após o cadastro
+        alert('Livro cadastrado com sucesso!');
+        this.livroTabelaComponent.refresh(); 
         form.reset();
-      });
-    }
+      },
+      (error) => {
+        alert('Erro ao cadastrar livro.');
+        console.error(error);
+      }
+    );
   }
 }
-
+}

@@ -16,7 +16,11 @@ namespace DesafioBackEndInfra
         public IDbConnection GetConnection()
         {
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
-            return new NpgsqlConnection(connectionString); // Não abre a conexão aqui!
+            return new NpgsqlConnection(connectionString);
+        }
+        public string GetConnectionString()
+        {
+            return _configuration.GetConnectionString("DefaultConnection");
         }
     }
 }

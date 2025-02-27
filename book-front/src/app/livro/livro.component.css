@@ -1,0 +1,40 @@
+.toggle-bar {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px; 
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .toggle-bar:hover {
+    background-color: #0056b3;
+  }
+  
+  .toggle-bar i {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+  }
+  
+  .toggle-bar:hover i {
+    transform: rotate(180deg); 
+  }
+  
+  .form-container {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s ease-in-out;
+  }
+  
+  .form-container.show-form {
+    max-height: 1000px; 
+  }
+  
+  form {
+    margin-top: 20px;
+  }
+  

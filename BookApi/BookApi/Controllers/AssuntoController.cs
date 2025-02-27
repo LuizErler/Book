@@ -15,7 +15,6 @@ namespace BookApi.Controllers
             _assuntoAppService = assuntoAppService;
         }
 
-        // GET: api/assunto
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Assunto>>> GetAssuntos()
         {
@@ -23,7 +22,6 @@ namespace BookApi.Controllers
             return Ok(assuntos);
         }
 
-        // GET: api/assunto/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Assunto>> GetAssunto(int id)
         {
@@ -35,7 +33,6 @@ namespace BookApi.Controllers
             return Ok(assunto);
         }
 
-        // POST: api/assunto
         [HttpPost]
         public async Task<ActionResult<Assunto>> PostAssunto(Assunto assunto)
         {
@@ -43,7 +40,6 @@ namespace BookApi.Controllers
             return CreatedAtAction("GetAssunto", new { id = id }, assunto);
         }
 
-        // PUT: api/assunto/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAssunto(int id, Assunto assunto)
         {
@@ -61,7 +57,6 @@ namespace BookApi.Controllers
             return NoContent();
         }
 
-        // DELETE: api/assunto/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAssunto(int id)
         {

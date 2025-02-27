@@ -12,27 +12,22 @@ export class LivroService {
 
   constructor(private http: HttpClient) {}
 
-  // Obtém todos os livros
   getLivros(): Observable<Livro[]> {
     return this.http.get<Livro[]>(this.apiUrl);
   }
 
-  // Obtém um livro pelo ID
   getLivroById(id: number): Observable<Livro> {
     return this.http.get<Livro>(`${this.apiUrl}/${id}`);
   }
 
-  // Adiciona um novo livro
   addLivro(livro: Livro): Observable<number> {
     return this.http.post<number>(this.apiUrl, livro);
   }
 
-  // Atualiza um livro existente
   updateLivro(id: number, livro: Livro): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${id}`, livro);
   }
 
-  // Exclui um livro pelo ID
   deleteLivro(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

@@ -15,7 +15,7 @@ import { Autor } from '../models/autor.model';
 })
 export class AutorComponent {
 autor: Autor = {
-    codAu: 0,  // Ou qualquer valor padrão que você queira
+    codAu: 0,  
     nome: ''
   };
 
@@ -26,7 +26,7 @@ autor: Autor = {
         this.autorService.addAutor(this.autor).subscribe(
           (response) => {
             alert('Autor cadastrado com sucesso!');
-            form.reset();  // Resetando o formulário após envio
+            form.reset();  
           },
           (error) => {
             alert('Erro ao cadastrar autor.');

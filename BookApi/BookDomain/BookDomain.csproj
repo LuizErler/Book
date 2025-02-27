@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Stimulsoft.Reports.Engine.NetCore" Version="2025.1.5" />
+  </ItemGroup>
+
 </Project>

@@ -7,29 +7,29 @@ import { Assunto } from '../models/assunto.model';  // Importando a interface
 
 @Component({
   selector: 'app-assunto',
-  standalone: true,  // Marcando o componente como standalone
-  imports: [HttpClientModule, CommonModule,FormsModule],  // Importando os módulos necessários
+  standalone: true,  
+  imports: [HttpClientModule, CommonModule,FormsModule],  
   providers: [AssuntoService],
-  templateUrl: './assunto.component.html',  // Usando um template externo
-  styleUrls: ['./assunto.component.css']  // Usando um arquivo de estilos externo
+  templateUrl: './assunto.component.html',  
+  styleUrls: ['./assunto.component.css']  
 })
 export class AssuntoComponent {
 
-  // Inicializando o objeto diretamente com valores padrão
+
   assunto: Assunto = {
-    codAs: 0,  // Ou qualquer valor padrão que você queira
+    codAs: 0,  
     descricao: ''
   };
 
   constructor(private assuntoService: AssuntoService) {}
 
-  // Função para o envio do formulário
+
   onSubmit(form: NgForm): void {
     if (form.valid) {
       this.assuntoService.addAssunto(this.assunto).subscribe(
         (response) => {
           alert('Assunto cadastrado com sucesso!');
-          form.reset();  // Resetando o formulário após envio
+          form.reset();  
         },
         (error) => {
           alert('Erro ao cadastrar assunto.');
