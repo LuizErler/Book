@@ -20,4 +20,8 @@
     <ProjectReference Include="..\BookDomain\BookDomain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="base\" />
+  </ItemGroup>
+
 </Project>
